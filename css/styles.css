@@ -1,0 +1,199 @@
+/* Calendario Entom - Pasteles oscuros (cómodo para la vista) */
+:root{
+  --bg:#0b1220;
+  --card:#141c2e;
+  --card2:#11182a;
+  --text:#eef2ff;
+  --muted:#a3acc7;
+
+  --brand:#2dd4bf;      /* verde agua pastel oscuro */
+  --brand2:#1e6f5c;     /* verde profundo */
+
+  --visit:#1fbf9a;      /* verde Entom */
+
+  --off:#d36b6b;        /* rojo medio (festivo no laboral) */
+  --work:#c4a64d;       /* dorado/ámbar (festivo laboral) */
+
+  --danger:#ff6b6b;
+  --line:rgba(255,255,255,.12);
+  --shadow:0 8px 24px rgba(0,0,0,.35);
+  --radius:16px;
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:
+    radial-gradient(900px 600px at 10% 0%, rgba(45,212,191,.16), transparent 60%),
+    radial-gradient(900px 600px at 90% 0%, rgba(30,111,92,.16), transparent 60%),
+    var(--bg);
+  color:var(--text);
+}
+
+.container{max-width:1200px; margin:0 auto; padding:16px; display:grid; gap:16px;}
+
+.app-header{
+  padding:14px 16px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter: blur(10px);
+  background: rgba(11,18,32,.74);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{display:flex; align-items:center; gap:12px; min-width:0}
+.brand__logo{width:56px; height:56px; border-radius:14px; object-fit:cover; border:1px solid var(--line); background:#0f172a}
+.brand__text h1{margin:0; font-size:18px; letter-spacing:.2px}
+.slogan{margin:4px 0 0; color:rgba(238,242,255,.95); font-weight:900; font-size:12px}
+.client-line{margin:4px 0 0; font-size:12px; color:var(--muted)}
+
+.header-actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+
+h2{margin:0 0 10px; font-size:16px}
+.subheading{margin:18px 0 8px; font-size:14px}
+.muted{color:var(--muted)}
+.tiny{font-size:10px}
+
+.btn{
+  appearance:none;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  color:var(--text);
+  border-radius:12px;
+  padding:10px 12px;
+  cursor:pointer;
+  font-weight:800;
+}
+.btn:focus{outline:2px solid rgba(45,212,191,.45); outline-offset:2px}
+.btn:hover{background: rgba(255,255,255,.07)}
+.btn--primary{background: linear-gradient(135deg, var(--brand), var(--brand2)); border-color:transparent}
+.btn--primary:hover{filter:brightness(1.06)}
+.btn--danger{border-color:rgba(255,107,107,.55); color:#ffd1d1}
+.btn--danger:hover{background: rgba(255,107,107,.15)}
+
+.form-grid{display:grid; grid-template-columns: 1.2fr .8fr .6fr; gap:12px;}
+
+.field{display:flex; flex-direction:column; gap:6px}
+.field__label{font-size:12px; color:var(--muted)}
+.field__help{font-size:11px; color:var(--muted)}
+
+input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background: rgba(0,0,0,.20);
+  color:var(--text);
+}
+input:focus{outline:2px solid rgba(45,212,191,.42); outline-offset:2px}
+input[aria-invalid="true"]{border-color: rgba(255,107,107,.85)}
+
+.form-actions{margin-top:12px; display:flex; gap:10px; flex-wrap:wrap}
+
+.message{margin-top:12px; font-size:12px}
+.message--ok{color:#bafbe7}
+.message--err{color:#ffd1d1}
+
+.table-wrap{overflow:auto; border:1px solid var(--line); border-radius:12px}
+.table{width:100%; border-collapse:collapse; min-width:520px; background: rgba(0,0,0,.14)}
+.table th,.table td{padding:10px; border-bottom:1px solid var(--line); text-align:left; font-size:12px}
+.table thead th{position:sticky; top:0; background: rgba(20,28,46,.92)}
+.table td input{padding:8px 10px; border-radius:10px}
+.row-error{background: rgba(255,107,107,.10)}
+
+.calendar-head{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; margin-bottom:8px}
+
+.legend{display:inline-flex; align-items:center; gap:6px; margin-left:8px; padding:2px 8px; border-radius:999px; font-size:11px; border:1px solid var(--line)}
+.legend--off{background: rgba(211,107,107,.18); border-color: rgba(211,107,107,.35)}
+.legend--work{background: rgba(196,166,77,.18); border-color: rgba(196,166,77,.35)}
+.legend--visit{background: rgba(31,191,154,.18); border-color: rgba(31,191,154,.35)}
+
+.calendar-grid{display:grid; grid-template-columns: repeat(3, minmax(240px, 1fr)); gap:12px;}
+
+.mini{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px;
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.10));
+  overflow:hidden;
+}
+.mini__title{display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:8px}
+.mini__title h3{margin:0; font-size:13px}
+.mini__title .year{color:var(--muted); font-size:11px}
+
+.week{display:grid; grid-template-columns: repeat(7, 1fr); gap:4px; margin-bottom:6px;}
+.dow{font-size:9.5px; color:var(--muted); text-align:center; letter-spacing:.2px}
+
+.days{display:grid; grid-template-columns: repeat(7, 1fr); gap:4px;}
+.day{
+  height:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  font-size:11px;
+  color: rgba(238,242,255,.94);
+}
+.day--muted{color: rgba(163,172,199,.78)}
+.day--visit{background: rgba(31,191,154,.26); border:1px solid rgba(31,191,154,.62); font-weight:900}
+.day--holiday-off{background: rgba(211,107,107,.18); border:1px dashed rgba(211,107,107,.45)}
+.day--holiday-work{background: rgba(196,166,77,.18); border:1px dashed rgba(196,166,77,.45)}
+
+.visit-text{margin-top:8px; font-size:11px; color:var(--text)}
+
+/* Responsive */
+@media (max-width: 900px){
+  .form-grid{grid-template-columns: 1fr;}
+  .calendar-grid{grid-template-columns: repeat(2, minmax(200px, 1fr));}
+}
+@media (max-width: 560px){
+  .calendar-grid{grid-template-columns: 1fr;}
+}
+
+/* Print: una sola hoja, encabezado limpio */
+@media print{
+  :root{ --bg:#fff; --text:#111; --muted:#333; --line:#bbb; }
+  body{background:#fff; color:#111}
+  .no-print{display:none !important}
+
+  /* Encabezado: solo logo + marca + cliente + eslogan */
+  .app-header{
+    position:static;
+    background:#fff;
+    border:none;
+    box-shadow:none;
+    padding:0 0 6mm 0;
+  }
+  .brand__logo{border:1px solid #bbb}
+  .slogan{color:#111}
+  .client-line{color:#111}
+
+  /* Área principal solo calendario */
+  .container{max-width:none; padding:0; gap:8px}
+  .card{box-shadow:none; border:none; background:#fff; padding:0}
+
+  @page{ size: landscape; margin: 8mm; }
+
+  .calendar-grid{gap:6px; grid-template-columns: repeat(4, 1fr);} /* 12 meses = 3x4 */
+  .mini{padding:6px; border-radius:10px; border:1px solid #bbb}
+  .day{height:16px; font-size:9px}
+  .dow{font-size:8px}
+  .mini__title h3{font-size:11px}
+  .visit-text{font-size:9px}
+}

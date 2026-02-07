@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1e6f5c" />
+  <title>Calendario Entom</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="images/logo.png" />
+  <link rel="apple-touch-icon" href="images/icon-192.png" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="app-header" id="printHeader">
+    <div class="brand">
+      <img src="images/logo.png" alt="Logo Fumigaciones Entom" class="brand__logo" />
+      <div class="brand__text">
+        <h1>Fumigaciones Entom</h1>
+        <p class="slogan">Es tiempo de fumigar</p>
+        <p class="client-line" id="printClientLine"><span class="muted">Cliente:</span> <strong id="outClientHeader">—</strong></p>
+      </div>
+    </div>
+
+    <div class="header-actions no-print">
+      <button id="btnPrint" class="btn btn--primary" type="button">Imprimir / Guardar PDF</button>
+      <button id="btnInstall" class="btn" type="button" hidden>Instalar</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="card no-print" aria-labelledby="formTitle">
+      <h2 id="formTitle">Datos del servicio</h2>
+      <form id="serviceForm" novalidate>
+        <div class="form-grid">
+          <label class="field">
+            <span class="field__label">Nombre (cliente)</span>
+            <input id="clientName" name="clientName" type="text" placeholder="Ej. Planta Norte" required minlength="2" maxlength="65" autocomplete="name" />
+            <small class="field__help">Campos obligatorios</small>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Fecha de la primera visita</span>
+            <input id="startDate" name="startDate" type="date" required inputmode="numeric" />
+            <small class="field__help">Obligatorio.</small>
+          </label>
+
+          <label class="field">
+            <span class="field__label">Hora de la primera visita</span>
+            <input id="startTime" name="startTime" type="time" required inputmode="numeric" />
+            <small class="field__help">Obligatorio.</small>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button id="btnGenerate" class="btn btn--primary" type="button">Generar 12 visitas</button>
+          <button id="btnUpdate" class="btn" type="button">Validar y actualizar calendario</button>
+          <button id="btnReset" class="btn btn--danger" type="reset">Limpiar</button>
+        </div>
+
+        <div id="formMessage" class="message" role="status" aria-live="polite"></div>
+
+        <h2 class="subheading">Visitas</h2>
+        
+        <div class="table-wrap">
+          <table class="table" aria-describedby="scheduleHelp">
+            <thead>
+              <tr>
+                <th>Mes</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleBody"></tbody>
+          </table>
+        </div>
+        <p id="scheduleHelp" class="muted">Tip: Si cambias una fecha a otro mes, el sistema te lo marcará como error para evitar inconsistencias.</p>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="calendarTitle" id="printArea">
+      <div class="calendar-head no-print">
+        <div>
+          <h2 id="calendarTitle">Calendario anual</h2>
+          <p class="muted">Días festivos: <span class="legend legend--off">No laborales</span> <span class="legend legend--work">Laborales</span> <span class="legend legend--visit">Visita Entom</span></p>
+        </div>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid" aria-label="Calendario de 12 meses"></div>
+
+      <footer class="print-footer no-print">
+        <div class="tiny muted">Calendario Entom · Fumigaciones Entom · Es tiempo de fumigar</div>
+      </footer>
+    </section>
+
+  </main>
+
+  <script defer src="js/app.js"></script>
+  <script defer src="js/sw-register.js"></script>
+</body>
+</html>
