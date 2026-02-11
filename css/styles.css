@@ -166,34 +166,139 @@ input[aria-invalid="true"]{border-color: rgba(255,107,107,.85)}
   .calendar-grid{grid-template-columns: 1fr;}
 }
 
-/* Print: una sola hoja, encabezado limpio */
-@media print{
-  :root{ --bg:#fff; --text:#111; --muted:#333; --line:#bbb; }
-  body{background:#fff; color:#111}
-  .no-print{display:none !important}
+/* ==========================
+   PRINT/PDF: conservar look oscuro del sitio
+   ========================== */
+@media print {
 
-  /* Encabezado: solo logo + marca + cliente + eslogan */
-  .app-header{
-    position:static;
-    background:#fff;
-    border:none;
-    box-shadow:none;
-    padding:0 0 6mm 0;
+  /* 1) Forzar que se impriman fondos y colores (PDF) */
+  *{
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
-  .brand__logo{border:1px solid #bbb}
-  .slogan{color:#111}
-  .client-line{color:#111}
 
-  /* Área principal solo calendario */
-  .container{max-width:none; padding:0; gap:8px}
-  .card{box-shadow:none; border:none; background:#fff; padding:0}
+  /* 2) Ocultar controles que no van al PDF */
+  .no-print{ display:none !important; }
 
+  /* 3) Página (puedes dejar landscape para 12 meses) */
   @page{ size: landscape; margin: 8mm; }
 
-  .calendar-grid{gap:6px; grid-template-columns: repeat(4, 1fr);} /* 12 meses = 3x4 */
-  .mini{padding:6px; border-radius:10px; border:1px solid #bbb}
-  .day{height:16px; font-size:9px}
-  .dow{font-size:8px}
-  .mini__title h3{font-size:11px}
-  .visit-text{font-size:9px}
+  /* 4) NO cambiamos variables de color ni color de texto.
+        Solo aseguramos que el fondo sea el mismo del site. */
+  body{
+    background: var(--bg) !important;
+  }
+
+  /* 5) Header: mantener el “glass” oscuro */
+  .app-header{
+    position: static !important;
+    background: rgba(11,18,32,.74) !important; /* igual a tu header en pantalla */
+    border-bottom: 1px solid var(--line) !important;
+    backdrop-filter: none !important;
+  }
+
+  /* 6) Cards: mantener el estilo oscuro con degradado suave */
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)) !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: none !important; /* en PDF suele verse mejor sin sombras */
+  }
+
+  /* 7) Calendario grid: NO obligo columnas aquí (ya lo tienes en pantalla),
+        pero si quieres exacto 3x4 en PDF, descomenta la línea. */
+  .calendar-grid{
+    gap: 12px !important;
+    /* grid-template-columns: repeat(3, minmax(240px, 1fr)) !important; */
+  }
+
+  /* 8) Cada mes (“mini card”): conservar fondo y borde */
+  .mini{
+    background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.10)) !important;
+    border: 1px solid var(--line) !important;
+  }
+
+  /* 9) Leyendas: conservar fondos/bordes originales */
+  .legend{ border-color: var(--line) !important; }
+  .legend--off{
+    background: rgba(211,107,107,.18) !important;
+    border-color: rgba(211,107,107,.35) !important;
+  }
+  .legend--work{
+    background: rgba(196,166,77,.18) !important;
+    border-color: rgba(196,166,77,.35) !important;
+  }
+  .legend--visit{
+    background: rgba(31,191,154,.18) !important;
+    border-color: rgba(31,191,154,.35) !important;
+  }
+
+  /* 10) Días: conservar exactamente tus backgrounds/bordes */
+  .day--visit{
+    background: rgba(31,191,154,.26) !important;
+    border: 1px solid rgba(31,191,154,.62) !important;
+  }
+  .day--holiday-off{
+    background: rgba(211,107,107,.18) !important;
+    border: 1px dashed rgba(211,107,107,.45) !important;
+  }
+  .day--holiday-work{
+    background: rgba(196,166,77,.18) !important;
+    border: 1px dashed rgba(196,166,77,.45) !important;
+  }
+
+  /* 11) Tabla: conservar look oscuro (si llega a imprimirse) */
+  .table-wrap{ border-color: var(--line) !important; }
+  .table{ background: rgba(0,0,0,.14) !important; }
+  .table thead th{ background: rgba(20,28,46,.92) !important; }
+}
+
+@media print {
+  /* Mantén esto (ya lo tienes): colores en impresión */
+  *{
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Mantén landscape y márgenes compactos */
+  @page{ size: landscape; margin: 8mm; }
+
+  /* ✅ CLAVE: 12 meses en 1 página = 4 columnas */
+  .calendar-grid{
+    grid-template-columns: repeat(4, 1fr) !important; /* 3x4 */
+    gap: 6px !important; /* más compacto que 12px */
+  }
+
+  /* ✅ Compactar “cards” de cada mes */
+  .mini{
+    padding: 6px !important;
+    border-radius: 10px !important;
+  }
+
+  /* ✅ Compactar encabezado del mes */
+  .mini__title h3{ font-size: 11px !important; }
+  .mini__title .year{ font-size: 10px !important; }
+
+  /* ✅ Compactar días y labels de días de semana */
+  .day{
+    height: 16px !important;
+    font-size: 9px !important;
+  }
+  .dow{ font-size: 8px !important; }
+
+  /* ✅ Compactar texto extra abajo (si lo tienes) */
+  .visit-text{ font-size: 9px !important; }
+
+  /* (Opcional) quita sombras en PDF para ahorrar espacio visual */
+  .card{ box-shadow: none !important; }
+}
+
+/* Alinear el texto "Entom nos visita..." al fondo de cada tarjeta (mes) */
+.mini{
+  display: flex;
+  flex-direction: column;
+}
+
+/* Empuja el texto final hacia abajo para que todos queden alineados */
+.visit-text{
+  margin-top: auto;
 }
