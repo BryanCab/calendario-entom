@@ -303,3 +303,69 @@ input[aria-invalid="true"]{border-color: rgba(255,107,107,.85)}
   margin-top: auto;
 }
 
+.only-print { display: none; }
+
+@media print {
+  .no-print { display: none !important; }
+  .only-print { display: block !important; }
+
+  /* Aseguramos que el header sea el contenedor de referencia */
+  .app-header {
+    position: relative !important;          /* para posicionar hijos absolutos */
+    background: rgba(11,18,32,.74) !important; /* ya lo tienes, reafirmamos look */
+  }
+
+  /* Leyenda de festivos en la esquina superior derecha del header */
+  .print-legend {
+    position: absolute;
+    top: 8px;                 /* ajusta si la quieres un poco más arriba/abajo */
+    right: 12px;              /* pegadita al margen derecho */
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    /* Mantener colores en PDF (tú ya lo tienes global, lo dejo por claridad) */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Compactar chips un pelín para que no “se vean pesados” en el header */
+  .print-legend .legend {
+    padding: 2px 8px;         /* más compacto que en pantalla */
+    font-size: 11px;
+    border-width: 1px;
+    margin: 0;                /* sin margen extra entre chips */
+  }
+}
+
+
+@media print {
+  .app-header {
+    position: relative !important;
+  }
+
+  .print-legend {
+    position: absolute;
+    right: 12px;
+
+    /* Centrado vertical en el header, un poquito más abajo */
+    top: 55%;                 /* prueba 52–58% según tu gusto */
+    transform: translateY(-50%);
+
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .print-legend .legend {
+    padding: 2px 8px;
+    font-size: 11px;
+    border-width: 1px;
+    margin: 0;
+  }
+}
